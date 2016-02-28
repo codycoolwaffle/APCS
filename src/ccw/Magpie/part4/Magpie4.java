@@ -42,8 +42,8 @@ public class Magpie4
 	 */
 	public String getResponse(String statement)
 	{
-		String response = "";
-		if (statement.length() == 0)
+        String response = "null";
+        if (statement.length() == 0)
 		{
 			response = "Say something, please.";
 		}
@@ -64,7 +64,10 @@ public class Magpie4
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
 			response = transformIWantToStatement(statement);
-		}
+		} else if(findKeyword(statement, "I want") >= 0)
+        {
+            response = transformIWantStatement(statement);
+        }
 
 		else
 		{
@@ -76,8 +79,11 @@ public class Magpie4
 					&& findKeyword(statement, "me", psn) >= 0)
 			{
 				response = transformYouMeStatement(statement);
-			}
-			else
+			} else if(findKeyword(statement, "I") >= 0
+                    && findKeyword(statement, "you", findKeyword(statement, "I")) >= 0)
+            {
+
+            } else
 			{
 				response = getRandomResponse();
 			}
@@ -107,9 +113,20 @@ public class Magpie4
 		return "What would it mean to " + restOfStatement + "?";
 	}
 
-	
-	
-	/**
+    private String transformIWantStatement(String statement)
+    {
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if(lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+        int psn = findKeyword(statement, "I want", 0);
+        String restOfStatement = statement.substring(psn + 9).trim();
+        return "What would it mean to " + restOfStatement + "?";
+    }
+
+    /**
 	 * Take a statement with "you <something> me" and transform it into 
 	 * "What makes you think that I <something> you?"
 	 * @param statement the user statement, assumed to contain "you" followed by "me"
@@ -133,12 +150,26 @@ public class Magpie4
 		String restOfStatement = statement.substring(psnOfYou + 3, psnOfMe).trim();
 		return "What makes you think that I " + restOfStatement + " you?";
 	}
-	
-	
 
-	
-	
-	/**
+
+    private String transformIYouStatement(String statement)
+    {
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if(lastChar.equals("."))
+        {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+
+        int psnOfI = findKeyword(statement, "i");
+        int psnOfYou = findKeyword(statement, "you", psnOfI);
+
+        String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
+        return "What makes you think that I " + restOfStatement + " you?";
+    }
+
+
+    /**
 	 * Search for one word in phrase.  The search is not case sensitive.
 	 * This method will check that the given goal is not a substring of a longer string
 	 * (so, for example, "I know" does not contain "no").  
