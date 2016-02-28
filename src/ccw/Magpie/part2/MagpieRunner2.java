@@ -1,5 +1,15 @@
 package ccw.Magpie.part2;
 
+
+/**************************************************************
+ * *
+ * https://github.com/codycoolwaffle/APCS/tree/master/src/ccw *
+ * *
+ **************************************************************/
+
+
+
+
 import java.util.Scanner;
 
 /**

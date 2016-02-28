@@ -1,5 +1,15 @@
 package ccw.Magpie.part2;
 
+
+/**************************************************************
+ * *
+ * https://github.com/codycoolwaffle/APCS/tree/master/src/ccw *
+ * *
+ **************************************************************/
+
+
+
+
 /**
  * A program to carry on conversations with a human user.
  * This is the initial version that:  
