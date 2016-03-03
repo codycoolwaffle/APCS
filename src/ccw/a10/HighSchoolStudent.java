@@ -1,3 +1,13 @@
+package ccw.a10;
+
+
+/*********************************************************
+ https://github.com/codycoolwaffle/APCS/tree/master/src/ccw
+ *********************************************************/
+
+
+
+
 //Start HighSchoolStudent Class
 public class HighSchoolStudent extends Student
 {
