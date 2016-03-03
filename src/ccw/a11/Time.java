@@ -80,14 +80,10 @@ public class Time implements Comparable
 	{
 		String s = "";
 		int altered = 0;
-		String suffix = null;
+		String suffix = "PM";
 		if(hour < 12)
 		{
 			suffix = "AM";
-		}
-		else
-		{
-			suffix = "PM";
 		}
 		if(hour > 12)
 		{
@@ -110,12 +106,10 @@ public class Time implements Comparable
 		if(altered == 1)
 		{
 			hour += 12;
-			altered = 0;
 		}
 		if(altered == 2)
 		{
 			hour -= 12;
-			altered = 0;
 		}
 		return s;
 	}
@@ -142,79 +136,88 @@ public class Time implements Comparable
 
 	public int compareTo(Object other)
 	{
-		return toString().compareTo(other.toString());
+		int out = 0;
+		int x = toString().compareTo(other.toString());
+		if(x == 0)
+		{
+			out = 0;
+		}
+		else if(x > 0)
+		{
+			out = 1;
+		}
+		else if(x < 0)
+		{
+			out = -1;
+		}
+		return out;
 	}
 
 	public String difference(Time t)
 	{
-		String x = toString();
-		String y = t.toString();
+		if(this.compareTo(t) == 0)
+		{
+			return "00:00";
+		}
+		int x = hour;
+		int y = minute;
 		int tempMinute = minute;
-		int tempMinute2 = minute;
 		minute = 0;
 		int tempHour = hour;
-		int tempHour2 = hour;
 		hour = 0;
-		int convert = 0;
 
-		if(x.compareTo(y) == 0)
+
+		while(this.compareTo(t) != 0)
 		{
-			convert = 0;
+			increment();
 		}
-		else if(x.compareTo(y) > 0)
+		if((hour * 10) + minute > (tempHour * 10) + tempMinute)
 		{
-			convert = 1;
-		}
-		else if(x.compareTo(y) < 0)
-		{
-			convert = -1;
+			int temp = hour;
+			hour = tempHour;
+			tempHour = temp;
+			temp = minute;
+			minute = tempMinute;
+			tempMinute = temp;
 		}
 
-		if(convert == 1)
+		int a = 0;
+		int b = 0;
+		while(tempHour != hour || tempMinute != minute)
 		{
-			for(int i = 0; toString().compareTo(t.toString()) != 0; i++)
+			increment();
+			a++;
+			if(a == 60)
 			{
-				increment();
-				tempMinute2 -= 1;
-				if(tempMinute2 == -1)
+				a = 0;
+				b++;
+				if(b == 24)
 				{
-					tempMinute2 = 59;
-					tempHour2 -= 1;
-					if(tempHour2 == -1)
-					{
-						tempHour2 = 23;
-					}
+					b = 0;
 				}
 			}
+
 		}
 
-		if(convert == -1)
+		hour = b;
+		minute = a;
+		String out = "";
+		if(hour < 10)
 		{
-			for(int i = 0; toString().compareTo(t.toString()) != 0; i++)
-			{
-				increment();
-				tempMinute2 += 1;
-				if(tempMinute2 == 60)
-				{
-					tempMinute2 = 0;
-					tempHour2 += 1;
-					if(tempHour2 == 24)
-					{
-						tempHour2 = 0;
-					}
-				}
-			}
+			out += "0";
 		}
+		out += hour + ":";
+		if(minute < 10)
+		{
+			out += "0";
+		}
+		out += minute;
 
-		String out = this.toString();
-		minute = tempMinute;
-		hour = tempHour;
+		hour = x;
+		minute = y;
 		return out;
 	}
 
 
 }
 //Yay!
-/**
- Why did you come all the way down here?
- **/

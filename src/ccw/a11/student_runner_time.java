@@ -15,16 +15,12 @@ package ccw.a11;
  */
 
 import java.io.IOException;
-import java.util.Scanner;
 
 class student_runner_time
 {
 
 	public static void main(String str[]) throws IOException
 	{
-
-		Scanner scan = new Scanner(System.in);
-
 		// time 1
 		Time t1 = new Time(17, 12);
 		System.out.println(t1);
