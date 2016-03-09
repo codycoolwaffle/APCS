@@ -15,7 +15,7 @@ public class a13
 {
 	public static String titleCase(String s)
 	{
-		return s.substring(0, 0).toUpperCase() + s.substring(1).toLowerCase();
+		return s.substring(0, 1).toUpperCase() + "" + s.substring(1).toLowerCase();
 	}
 
 	public static void main(String[] args)
@@ -34,11 +34,8 @@ public class a13
 		if(names.size()==0)
 			names.add("CeCe");
 
-		for(String s : names)
-		{
-			System.out.print(s.toLowerCase());
-			s = titleCase(s.toLowerCase());
-		}
+		for(int i = 0; i < names.size(); i++)
+			names.set(i, titleCase(names.get(i)));
 		System.out.println(names);
 	}
 }
