@@ -2,10 +2,8 @@ package ccw.elevens.a9;
 
 
 /*********************************************************
- https://github.com/codycoolwaffle/APCS/tree/master/src/ccw
+ * https://github.com/codycoolwaffle/APCS/tree/master/src/ccw
  *********************************************************/
-
-
 
 
 import java.util.List;
@@ -14,7 +12,8 @@ import java.util.ArrayList;
 /**
  * The ElevensBoard class represents the board in a game of Elevens.
  */
-public class ElevensBoard extends Board {
+public class ElevensBoard extends Board
+{
 
 	/**
 	 * The size (number of cards) on the board.
@@ -24,20 +23,17 @@ public class ElevensBoard extends Board {
 	/**
 	 * The ranks of the cards for this game to be sent to the deck.
 	 */
-	private static final String[] RANKS =
-		{"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
+	private static final String[] RANKS = {"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
 
 	/**
 	 * The suits of the cards for this game to be sent to the deck.
 	 */
-	private static final String[] SUITS =
-		{"spades", "hearts", "diamonds", "clubs"};
+	private static final String[] SUITS = {"spades", "hearts", "diamonds", "clubs"};
 
 	/**
 	 * The values of the cards for this game to be sent to the deck.
 	 */
-	private static final int[] POINT_VALUES =
-		{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0};
+	private static final int[] POINT_VALUES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0};
 
 	/**
 	 * Flag used to control debugging print statements.
@@ -48,23 +44,30 @@ public class ElevensBoard extends Board {
 	/**
 	 * Creates a new <code>ElevensBoard</code> instance.
 	 */
-	 public ElevensBoard() {
-	 	super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
-	 }
+	public ElevensBoard()
+	{
+		super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
+	}
 
 	/**
 	 * Determines if the selected cards form a valid group for removal.
 	 * In Elevens, the legal groups are (1) a pair of non-face cards
 	 * whose values add to 11, and (2) a group of three cards consisting of
 	 * a jack, a queen, and a king in some order.
+	 *
 	 * @param selectedCards the list of the indices of the selected cards.
 	 * @return true if the selected cards form a valid group for removal;
-	 *         false otherwise.
+	 * false otherwise.
 	 */
 	@Override
-	public boolean isLegal(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		return true;
+	public boolean isLegal(List<Integer> selectedCards)
+	{
+		if(selectedCards.size() == 2)
+		{
+			return containsPairSum11(selectedCards);
+		}
+		else if(selectedCards.size() == 3) return containsJQK(selectedCards);
+		return false;
 	}
 
 	/**
@@ -72,35 +75,64 @@ public class ElevensBoard extends Board {
 	 * In Elevens, there is a legal play if the board contains
 	 * (1) a pair of non-face cards whose values add to 11, or (2) a group
 	 * of three cards consisting of a jack, a queen, and a king in some order.
+	 *
 	 * @return true if there is a legal play left on the board;
-	 *         false otherwise.
+	 * false otherwise.
 	 */
 	@Override
-	public boolean anotherPlayIsPossible() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+	public boolean anotherPlayIsPossible()
+	{
+		List<Integer> cardIndexes = cardIndexes();
+		return containsPairSum11(cardIndexes) || containsJQK(cardIndexes);
 	}
 
 	/**
 	 * Check for an 11-pair in the selected cards.
+	 *
 	 * @param selectedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
 	 *                      to find an 11-pair.
 	 * @return true if the board entries in selectedCards
-	 *              contain an 11-pair; false otherwise.
+	 * contain an 11-pair; false otherwise.
 	 */
-	private boolean containsPairSum11(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+	private boolean containsPairSum11(List<Integer> selectedCards)
+	{
+		for(int i = 0; i < selectedCards.size(); i++)
+		{
+			int x = selectedCards.get(i).intValue();
+			for(int i2 = i + 1; i2 < selectedCards.size(); i2++)
+			{
+				int y = selectedCards.get(i2).intValue();
+				if(cardAt(x).pointValue() + cardAt(y).pointValue() == 11) return true;
+			}
+		}
+		return false;
 	}
 
 	/**
 	 * Check for a JQK in the selected cards.
+	 *
 	 * @param selectedCards selects a subset of this board.  It is list
 	 *                      of indexes into this board that are searched
 	 *                      to find a JQK group.
 	 * @return true if the board entries in selectedCards
-	 *              include a jack, a queen, and a king; false otherwise.
+	 * include a jack, a queen, and a king; false otherwise.
 	 */
-	private boolean containsJQK(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+	private boolean containsJQK(List<Integer> selectedCards)
+	{
+		boolean kingUsed = false;
+		boolean queenUsed = false;
+		boolean jackUsed = false;
+		for(Integer i : selectedCards)
+		{
+			int pos = i.intValue();
+			if(cardAt(pos).rank().equals("jack"))
+				jackUsed = true;
+			else if(cardAt(pos).rank().equals("queen"))
+				queenUsed = true;
+			else if(cardAt(pos).rank().equals("king"))
+				kingUsed = true;
+		}
+		return jackUsed && queenUsed && kingUsed;
 	}
 }

@@ -96,13 +96,9 @@ public class ElevensBoard
 	 */
 	public boolean isEmpty()
 	{
-		for(int k = 0; k < cards.length; k++)
-		{
-			if(cards[k] != null)
-			{
+		for(Card card : cards)
+			if(card != null)
 				return false;
-			}
-		}
 		return true;
 	}
 
@@ -143,9 +139,7 @@ public class ElevensBoard
 	public void replaceSelectedCards(List<Integer> selectedCards)
 	{
 		for(Integer k : selectedCards)
-		{
 			deal(k.intValue());
-		}
 	}
 
 	/**
@@ -160,9 +154,7 @@ public class ElevensBoard
 		for(int k = 0; k < cards.length; k++)
 		{
 			if(cards[k] != null)
-			{
 				selected.add(new Integer(k));
-			}
 		}
 		return selected;
 	}
@@ -215,6 +207,7 @@ public class ElevensBoard
 	public boolean isLegal(List<Integer> selectedCards)
 	{
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		return true;
 	}
 
 	/**
@@ -228,6 +221,7 @@ public class ElevensBoard
 	public boolean anotherPlayIsPossible()
 	{
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		return true;
 	}
 
 
@@ -253,6 +247,7 @@ public class ElevensBoard
 	private boolean containsPairSum11(List<Integer> selectedCards)
 	{
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		return true;
 	}
 
 	/**
@@ -266,5 +261,6 @@ public class ElevensBoard
 	private boolean containsJQK(List<Integer> selectedCards)
 	{
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		return true;
 	}
 }

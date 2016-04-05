@@ -69,22 +69,19 @@ public class Shuffler
 	 */
 	public static void perfectShuffle(int[] values)
 	{
-		ArrayList<Integer> val2 = new ArrayList<Integer>();
+		ArrayList<Integer> valShuff = new ArrayList<Integer>();
 		for(int value : values)
-		{
-			val2.add(value);
-		}
+			valShuff.add(value);
 
 		for(int i = 1; i < values.length; i += 2)
 		{
-			val2.add(i, val2.get((i + val2.size()) / 2));
-			val2.remove(((i + val2.size()) / 2));
+			int midPoint = (i+valShuff.size())/2;
+			valShuff.add(i, valShuff.get(midPoint));
+			valShuff.remove(midPoint);
 		}
 
-		for(int i = 0; i < val2.size(); i++)
-		{
-			values[i] = val2.get(i);
-		}
+		for(int i = 0; i < valShuff.size(); i++)
+			values[i] = valShuff.get(i);
 	}
 
 	/**

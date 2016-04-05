@@ -2,10 +2,8 @@ package ccw.elevens.a9;
 
 
 /*********************************************************
- https://github.com/codycoolwaffle/APCS/tree/master/src/ccw
+ * https://github.com/codycoolwaffle/APCS/tree/master/src/ccw
  *********************************************************/
-
-
 
 
 import java.util.List;
@@ -16,22 +14,21 @@ import java.util.ArrayList;
  * of solitaire games similar to Elevens.  The variants differ in
  * card removal and the board size.
  */
-public abstract class Board {
-
-	/**
-	 * The cards on this board.
-	 */
-	private Card[] cards;
-
-	/**
-	 * The deck of cards being used to play the current game.
-	 */
-	private Deck deck;
+public abstract class Board
+{
 
 	/**
 	 * Flag used to control debugging print statements.
 	 */
 	private static final boolean I_AM_DEBUGGING = false;
+	/**
+	 * The cards on this board.
+	 */
+	private Card[] cards;
+	/**
+	 * The deck of cards being used to play the current game.
+	 */
+	private Deck deck;
 
 	/**
 	 * Creates a new <code>Board</code> instance.
@@ -41,10 +38,12 @@ public abstract class Board {
 	 * @param pointValues the integer values of the cards needed to create
 	 *                    the deck
 	 */
-	public Board(int size, String[] ranks, String[] suits, int[] pointValues) {
+	public Board(int size, String[] ranks, String[] suits, int[] pointValues)
+	{
 		cards = new Card[size];
 		deck = new Deck(ranks, suits, pointValues);
-		if (I_AM_DEBUGGING) {
+		if(I_AM_DEBUGGING)
+		{
 			System.out.println(deck);
 			System.out.println("----------");
 		}
@@ -55,7 +54,8 @@ public abstract class Board {
 	 * Start a new game by shuffling the deck and
 	 * dealing some cards to this board.
 	 */
-	public void newGame() {
+	public void newGame()
+	{
 		deck.shuffle();
 		dealMyCards();
 	}
@@ -66,7 +66,8 @@ public abstract class Board {
 	 * which will be smaller near the end of a winning game.
 	 * @return the size of the board
 	 */
-	public int size() {
+	public int size()
+	{
 		return cards.length;
 	}
 
@@ -74,9 +75,12 @@ public abstract class Board {
 	 * Determines if the board is empty (has no cards).
 	 * @return true if this board is empty; false otherwise.
 	 */
-	public boolean isEmpty() {
-		for (int k = 0; k < cards.length; k++) {
-			if (cards[k] != null) {
+	public boolean isEmpty()
+	{
+		for(int k = 0; k < cards.length; k++)
+		{
+			if(cards[k] != null)
+			{
 				return false;
 			}
 		}
@@ -88,7 +92,8 @@ public abstract class Board {
 	 * If the deck is empty, the kth card is set to null.
 	 * @param k the index of the card to be dealt.
 	 */
-	public void deal(int k) {
+	public void deal(int k)
+	{
 		cards[k] = deck.deal();
 	}
 
@@ -96,7 +101,8 @@ public abstract class Board {
 	 * Accesses the deck's size.
 	 * @return the number of undealt cards left in the deck.
 	 */
-	public int deckSize() {
+	public int deckSize()
+	{
 		return deck.size();
 	}
 
@@ -105,7 +111,8 @@ public abstract class Board {
 	 * @return the card at position k on the board.
 	 * @param k is the board position of the card to return.
 	 */
-	public Card cardAt(int k) {
+	public Card cardAt(int k)
+	{
 		return cards[k];
 	}
 
@@ -114,8 +121,10 @@ public abstract class Board {
 	 * @param selectedCards is a list of the indices of the
 	 *        cards to be replaced.
 	 */
-	public void replaceSelectedCards(List<Integer> selectedCards) {
-		for (Integer k : selectedCards) {
+	public void replaceSelectedCards(List<Integer> selectedCards)
+	{
+		for(Integer k : selectedCards)
+		{
 			deal(k.intValue());
 		}
 	}
@@ -126,10 +135,13 @@ public abstract class Board {
 	 * @return a List that contains the locations (indexes)
 	 *         of the non-null entries on the board.
 	 */
-	public List<Integer> cardIndexes() {
+	public List<Integer> cardIndexes()
+	{
 		List<Integer> selected = new ArrayList<Integer>();
-		for (int k = 0; k < cards.length; k++) {
-			if (cards[k] != null) {
+		for(int k = 0; k < cards.length; k++)
+		{
+			if(cards[k] != null)
+			{
 				selected.add(new Integer(k));
 			}
 		}
@@ -140,9 +152,11 @@ public abstract class Board {
 	 * Generates and returns a string representation of this board.
 	 * @return the string version of this board.
 	 */
-	public String toString() {
+	public String toString()
+	{
 		String s = "";
-		for (int k = 0; k < cards.length; k++) {
+		for(int k = 0; k < cards.length; k++)
+		{
 			s = s + k + ": " + cards[k] + "\n";
 		}
 		return s;
@@ -154,10 +168,14 @@ public abstract class Board {
 	 * @return true when the current game has been won;
 	 *         false otherwise.
 	 */
-	public boolean gameIsWon() {
-		if (deck.isEmpty()) {
-			for (Card c : cards) {
-				if (c != null) {
+	public boolean gameIsWon()
+	{
+		if(deck.isEmpty())
+		{
+			for(Card c : cards)
+			{
+				if(c != null)
+				{
 					return false;
 				}
 			}
@@ -186,8 +204,10 @@ public abstract class Board {
 	/**
 	 * Deal cards to this board to start the game.
 	 */
-	private void dealMyCards() {
-		for (int k = 0; k < cards.length; k++) {
+	private void dealMyCards()
+	{
+		for(int k = 0; k < cards.length; k++)
+		{
 			cards[k] = deck.deal();
 		}
 	}
