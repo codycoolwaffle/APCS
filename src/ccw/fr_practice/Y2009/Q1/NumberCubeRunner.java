@@ -33,7 +33,26 @@ public class NumberCubeRunner
 	 */
 	public static int getLongestRun(int[] values)
 	{
-		return -1;
+		int out = -1;
+		NumberCube run = new NumberCube();
+		int[] temp = new int[256];
+		temp[0] = run.toss();
+
+		boolean breakLoop = false;
+		for(int i = 1; breakLoop == false && i < temp.length; i++)
+		{
+			temp[i] = run.toss();
+			for(int pos = 0; pos < values.length - 1 && breakLoop == false; pos++)
+			{
+				if(temp[i-1] == values[pos] && temp[i] == values[pos + 1])
+				{
+					out = i;
+					breakLoop = true;
+				}
+			}
+		}
+
+		return out;
 	}
 
 	public static void main(String[] args)
